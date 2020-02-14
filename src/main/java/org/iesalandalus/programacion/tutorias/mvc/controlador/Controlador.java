@@ -130,12 +130,12 @@ public class Controlador {
 		return modelo.getProfesores();
 	}
 
-	public Tutoria[] getTutorias() 
+	public List<Tutoria> getTutorias() 
 	{
 		return modelo.getTutorias();
 	}
 
-	public Tutoria[] getTutorias(Profesor profesor) 
+	public List<Tutoria> getTutorias(Profesor profesor) 
 	{
 		return modelo.getTutorias(profesor);
 	}

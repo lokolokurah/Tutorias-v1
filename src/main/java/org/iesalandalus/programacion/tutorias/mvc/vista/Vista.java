@@ -193,8 +193,8 @@ public class Vista {
 	public void listarTutorias() 
 	{
 		Consola.mostrarCabecera("Listado de Tutorías");
-		Tutoria[] tutorias = controlador.getTutorias();
-		if (tutorias[0] != null) 
+		List<Tutoria> tutorias = controlador.getTutorias();
+		if (!tutorias.isEmpty()) 
 		{
 			for (Tutoria tutoria : tutorias) 
 			{
@@ -209,8 +209,8 @@ public class Vista {
 	public void listarTutoriasProfesor() 
 	{
 		Consola.mostrarCabecera("Listado de Tutorías de un Profesor");
-		Tutoria[] tutorias = controlador.getTutorias(Consola.leerProfesorFicticio());
-		if (tutorias.length != 0 && tutorias[0] != null) 
+		List<Tutoria> tutorias = controlador.getTutorias(Consola.leerProfesorFicticio());
+		if (!tutorias.isEmpty()) 
 		{
 			for (Tutoria tutoria : tutorias) 
 			{
