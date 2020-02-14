@@ -1,5 +1,7 @@
 package org.iesalandalus.programacion.tutorias.mvc.modelo;
 
+import java.util.List;
+
 import javax.naming.OperationNotSupportedException;
 
 import org.iesalandalus.programacion.tutorias.mvc.modelo.dominio.Alumno;
@@ -29,7 +31,7 @@ public class Modelo {
 		tutorias = new Tutorias(CAPACIDAD);
 		sesiones = new Sesiones(CAPACIDAD);
 		citas = new Citas(CAPACIDAD);
-		alumnos = new Alumnos(CAPACIDAD);
+		alumnos = new Alumnos();
 	}
 
 	public void insertar(Alumno alumno) throws OperationNotSupportedException
@@ -107,7 +109,7 @@ public class Modelo {
 		citas.borrar(cita);
 	}
 
-	public Alumno[] getAlumnos() 
+	public List<Alumno> getAlumnos() 
 	{
 		return alumnos.get();
 	}

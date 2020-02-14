@@ -1,5 +1,7 @@
 package org.iesalandalus.programacion.tutorias.mvc.vista;
 
+import java.util.List;
+
 import javax.naming.OperationNotSupportedException;
 
 import org.iesalandalus.programacion.tutorias.mvc.controlador.Controlador;
@@ -69,7 +71,7 @@ public class Vista {
 	
 	public void borrarAlumno() 
 	{
-		Consola.mostrarCabecera("Borrar Profesor");
+		Consola.mostrarCabecera("Borrar Alumno");
 		try 
 		{
 			controlador.borrar(Consola.leerAlumnoFicticio());
@@ -82,8 +84,8 @@ public class Vista {
 	public void listarAlumnos() 
 	{
 		Consola.mostrarCabecera("Listado de Alumnos");
-		Alumno[] alumnos = controlador.getAlumnos();
-		if (alumnos[0] != null) 
+		List<Alumno> alumnos = controlador.getAlumnos();
+		if (!alumnos.isEmpty()) 
 		{
 			for (Alumno alumno : alumnos) 
 			{
