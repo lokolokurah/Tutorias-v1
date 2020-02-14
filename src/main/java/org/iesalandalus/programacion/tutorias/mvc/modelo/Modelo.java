@@ -30,7 +30,7 @@ public class Modelo {
 		profesores = new Profesores();
 		tutorias = new Tutorias();
 		sesiones = new Sesiones();
-		citas = new Citas(CAPACIDAD);
+		citas = new Citas();
 		alumnos = new Alumnos();
 	}
 
@@ -139,17 +139,17 @@ public class Modelo {
 		return sesiones.get(tutoria);
 	}
 
-	public Cita[] getCitas()
+	public List<Cita> getCitas()
 	{
 		return citas.get();
 	}
 
-	public Cita[] getCitas(Sesion sesion)
+	public List<Cita> getCitas(Sesion sesion)
 	{
 		return citas.get(sesion);
 	}
 
-	public Cita[] getCitas(Alumno alumno) 
+	public List<Cita> getCitas(Alumno alumno) 
 	{
 		return citas.get(alumno);
 	}
