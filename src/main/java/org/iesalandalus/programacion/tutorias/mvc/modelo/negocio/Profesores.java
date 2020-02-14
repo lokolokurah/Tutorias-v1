@@ -1,107 +1,72 @@
 package org.iesalandalus.programacion.tutorias.mvc.modelo.negocio;
 
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+
 import javax.naming.OperationNotSupportedException;
 
 import org.iesalandalus.programacion.tutorias.mvc.modelo.dominio.Profesor;
 
 public class Profesores {
 
-	private int capacidad, tamano;
-	private Profesor[] coleccionProfesores;
+	private List<Profesor> coleccionProfesores;
 	
-	public Profesores(int capacidad) 
+	public Profesores() 
 	{
-		if (capacidad <= 0) 
+		coleccionProfesores = new ArrayList<>();
+	}
+	
+	public List<Profesor> get() 
+	{
+		List<Profesor> profesoresOrdenados = copiaProfundaProfesores();
+		profesoresOrdenados.sort(Comparator.comparing(Profesor::getDni));
+		return profesoresOrdenados;
+	}
+	
+	private List<Profesor> copiaProfundaProfesores()
+	{
+		List<Profesor> copiaProfesores = new ArrayList<>();
+		for (Profesor profesor : coleccionProfesores) 
 		{
-			throw new IllegalArgumentException("ERROR: La capacidad debe ser mayor que cero.");
+			copiaProfesores.add(new Profesor(profesor));
 		}
-		coleccionProfesores = new Profesor[capacidad];
-		this.capacidad = capacidad;
-		tamano = 0;
-	}
-
-	public Profesor[] get()
-	{
-		return copiaProfundaProfesores();
+		return copiaProfesores;
 	}
 	
-	//Clonación por copia profunda.
-	private Profesor[] copiaProfundaProfesores() 
+	public int getTamano() 
 	{
-		Profesor[] copiaProfundaProfesores = new Profesor[capacidad];
-		for (int i = 0; !tamanoSuperado(i); i++) 
-		{
-			copiaProfundaProfesores[i] = new Profesor(coleccionProfesores[i]);
-		}
-		return copiaProfundaProfesores;
+		return coleccionProfesores.size();
 	}
 	
-	public int getTamano()
-	{
-		return tamano;
-	}
-
-	public int getCapacidad() 
-	{
-		return capacidad;
-	}
-	
-	public void insertar(Profesor profesor) throws OperationNotSupportedException 
+	public void insertar(Profesor profesor) throws OperationNotSupportedException
 	{
 		if (profesor == null) 
 		{
 			throw new NullPointerException("ERROR: No se puede insertar un profesor nulo.");
 		}
-		if (capacidadSuperada(buscarIndice(profesor))) 
+		int indice = coleccionProfesores.indexOf(profesor);
+		if (indice == -1) 
 		{
-			throw new OperationNotSupportedException("ERROR: No se aceptan más profesores.");
-		}
-		if (tamanoSuperado(buscarIndice(profesor))) 
-		{
-			coleccionProfesores[buscarIndice(profesor)] = new Profesor(profesor);
-			tamano++;
+			coleccionProfesores.add(new Profesor(profesor));
 		} else {
 			throw new OperationNotSupportedException("ERROR: Ya existe un profesor con ese DNI.");
-		}
+		}		
+		
 	}
-	
-	private int buscarIndice(Profesor profesor) 
-	{
-		int indice = 0;
-		boolean encontrado = false;
-		while (!tamanoSuperado(indice) && !encontrado) 
-		{
-			if (coleccionProfesores[indice].equals(profesor)) 
-			{
-				encontrado = true;
-			} else {
-				indice++;
-			}
-		}
-		return indice;
-	}
-	
-	private boolean tamanoSuperado(int indice)
-	{
-		return indice >= tamano;
-	}
-	
-	private boolean capacidadSuperada(int indice)
-	{
-		return indice >= capacidad;
-	}
-	
-	public Profesor buscar(Profesor profesor)
+
+	public Profesor buscar(Profesor profesor) 
 	{
 		if (profesor == null) 
 		{
 			throw new IllegalArgumentException("ERROR: No se puede buscar un profesor nulo.");
 		}
-		if (tamanoSuperado(buscarIndice(profesor))) 
+		int indice = coleccionProfesores.indexOf(profesor);
+		if (indice == -1) 
 		{
 			return null;
 		} else {
-			return new Profesor(profesor);
+			return new Profesor(coleccionProfesores.get(indice));
 		}
 	}
 	
@@ -111,20 +76,12 @@ public class Profesores {
 		{
 			throw new IllegalArgumentException("ERROR: No se puede borrar un profesor nulo.");
 		}
-		if (!tamanoSuperado(buscarIndice(profesor))) 
+		int indice = coleccionProfesores.indexOf(profesor);
+		if (indice == -1) 
 		{
-			desplazarUnaPosicionHaciaIzquierda(buscarIndice(profesor));
-		} else {
 			throw new OperationNotSupportedException("ERROR: No existe ningún profesor con ese DNI.");
+		} else {
+			coleccionProfesores.remove(indice);
 		}
-	}
-	
-	private void desplazarUnaPosicionHaciaIzquierda(int indice) 
-	{
-		for (int i = indice; !tamanoSuperado(i); i++) 
-		{
-			coleccionProfesores[i] = coleccionProfesores[i + 1];
-		}
-		tamano--;
 	}
 }
