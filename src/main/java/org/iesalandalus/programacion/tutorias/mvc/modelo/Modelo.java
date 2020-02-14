@@ -29,7 +29,7 @@ public class Modelo {
 	{
 		profesores = new Profesores();
 		tutorias = new Tutorias();
-		sesiones = new Sesiones(CAPACIDAD);
+		sesiones = new Sesiones();
 		citas = new Citas(CAPACIDAD);
 		alumnos = new Alumnos();
 	}
@@ -129,12 +129,12 @@ public class Modelo {
 		return tutorias.get(profesor);
 	}
 
-	public Sesion[] getSesiones() 
+	public List<Sesion> getSesiones() 
 	{
 		return sesiones.get();
 	}
 
-	public Sesion[] getSesiones(Tutoria tutoria) 
+	public List<Sesion> getSesiones(Tutoria tutoria) 
 	{
 		return sesiones.get(tutoria);
 	}
